@@ -3,13 +3,31 @@
 include("../template/header.php");
 ?>
 
+<?php 
+//Recepcion y validacion con ifs ternarios de los datos que se reciban del form
+
+$txtID=(isset($_POST['txtID']))?$_POST['txtID']:"";//recibimos el ID del form si se recibe un id entonces txtID=$_POST['txtID'] caso contrario nada
+$nombreProd=(isset($_POST['nombreProd']))?$_POST['nombreProd']:"";//recibimos nombre si hay un nombre nombreProd=$_POST['nombreProd']
+$imagen=(isset($_FILES['imagen']['name']))?$_FILES['imagen']['name']:"";//lo mismo con una imagen
+$accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que se esta realizando agregar, editar o cancelar
+
+//verificamos que si se esten recibiendo los datos:
+
+ echo $txtID."<br>";
+ echo $nombreProd."<br>";
+ echo $imagen."<br>";
+ echo $accion."<br>";
+
+
+?>
+
 <div class="col-md-5">
     <div class="card">
         <div class="card-header">
             Registra producto
         </div>
         <div class="card-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="txtID">ID:</label>
@@ -26,14 +44,14 @@ include("../template/header.php");
                 <br>
                 <div class="form-group">
                     <label for="imagen">Imagen producto:</label>
-                    <input type="file" class="form-control" name="imagen" id="imagen" placeholder="Producto">
+                    <input type="file" class="form-control" name="imagen" id="imagen" >
                 </div>
 
                 <br>
-                <div class="btn-group" role="group" aria-label="Button group name">
-                    <button type="button" class="btn btn-success">Agregar</button>
-                    <button type="button" class="btn btn-warning">Editar</button>
-                    <button type="button" class="btn btn-info">Cancelar</button>
+                <div class="btn-group" role="group" aria-label="">
+                    <button type="submit" name="accion" value="Agregar" class="btn btn-success">Agregar</button>
+                    <button type="submit" name="accion" value="Editar" class="btn btn-warning">Editar</button>
+                    <button type="submit" name="accion" value="Cancelar" class="btn btn-info">Cancelar</button>
                 </div>
             </form>
 
