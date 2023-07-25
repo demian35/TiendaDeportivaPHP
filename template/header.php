@@ -17,7 +17,7 @@
                 <a class="nav-link active" href="#">Deportes Demian </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Inicio</a>
+                <a class="nav-link" href="index.php">Inicio</a>
             </li>
 
             <li class="nav-item">
@@ -25,7 +25,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Acerca de nosotros</a>
+                <a class="nav-link" href="nosotros.php">Acerca de nosotros</a>
             </li>
         </ul>
     </nav>
