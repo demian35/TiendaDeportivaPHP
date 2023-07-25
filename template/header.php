@@ -21,7 +21,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Playeras</a>
+                <a class="nav-link" href="productos.php">Playeras</a>
             </li>
 
             <li class="nav-item">
@@ -31,4 +31,5 @@
     </nav>
 
     <div class="container">
+        <br>
         <div class="row">
