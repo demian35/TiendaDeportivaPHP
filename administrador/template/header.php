@@ -13,14 +13,14 @@
 </head>
 
 <body>
-    <?php $url="http://".$_SERVER['HTTP_HOST']."/3000" //url para redireccionar recibe el host y la direccion de la pagina ala queremos redireccionar?>
+    <?php $url="http://".$_SERVER['HTTP_HOST'] //url para redireccionar recibe el host y la direccion de la pagina ala queremos redireccionar?>
 
     <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="nav navbar-nav">
             <a class="nav-item nav-link active" href="#" aria-current="page">Administrador del sitio <span class="visually-hidden">(current)</span></a>
             <a class="nav-item nav-link" href="<?php echo $url?>/administrador/inicio.php">Inicio</a>
-            <a class="nav-item nav-link" href="#">Playeras</a>
-            <a class="nav-item nav-link" href="#">Cerrar sesion</a>
+            <a class="nav-item nav-link" href="<?php echo $url?>/administrador/seccion/productos.php">Playeras</a>
+            <a class="nav-item nav-link" href="<?php echo $url?>/administrador/seccion/cerrar.php">Cerrar sesion</a>
             <a class="nav-item nav-link" href="<?php echo $url?>">Ver sitio web</a>
 
         </div>
