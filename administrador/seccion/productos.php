@@ -18,6 +18,18 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
  echo $imagen."<br>";
  echo $accion."<br>";
 
+ //validacion de la accion que se presenta
+ switch($accion){
+    case "Agregar"://si se presiona agregar
+        echo "Se presiono el boton de agregar";
+        break;
+    case "Editar"://si se presiona editar
+        echo "Se presiono el boton editar";
+        break;
+    case "Cancelar"://si se presiona cancelar
+        echo "Se presiono cancelar";
+        break;
+ }
 
 ?>
 
