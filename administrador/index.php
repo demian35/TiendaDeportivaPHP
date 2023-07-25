@@ -1,3 +1,10 @@
+<?php
+
+if($_POST){
+    header('Location:inicio.php');
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -32,17 +39,17 @@
                         Login
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="" method="post">
 
                         <div class = "form-group">
-                        <label for="exampleInputEmail1">Usuario</label>
-                        <input required type="text" class="form-control" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese su usuario">
+                        <label>Usuario</label>
+                        <input  type="text" class="form-control" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese su usuario">
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
 
                         <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input required type="password" class="form-control" name="contrasena" placeholder="Password">
+                        <label >Password</label>
+                        <input  type="password" class="form-control" name="contrasena" placeholder="Password">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Iniciar sesion</button>
