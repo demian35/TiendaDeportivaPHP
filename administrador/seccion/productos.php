@@ -65,7 +65,7 @@ switch ($accion) {
         }
         break;
     case "Cancelar": //si se presiona cancelar
-        echo "Se presiono cancelar";
+        header("location:productos.php");
         break;
     case "Seleccionar": //seleccionamos el registro al que le apachurremos el boton selecionar
         $sentencia = $conexion->prepare("SELECT * FROM sitiotiendadeportiva.productos WHERE idproductos=:id;");
