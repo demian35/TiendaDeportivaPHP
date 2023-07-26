@@ -29,6 +29,7 @@ switch ($accion) {
         }
         $sentencia->bindParam(':imagen', $archivoimagen);
         $sentencia->execute();
+        header("location:productos.php");
         break;
     case "Editar": //si se presiona editar
         $sentencia = $conexion->prepare("UPDATE productos SET producto=:nombre WHERE idproductos=:id"); //sentencia para editar
@@ -60,6 +61,7 @@ switch ($accion) {
             $sentencia->bindParam(':imagen', $archivoimagen); //parametros a editar en la base de datos en este caso la imagen
             $sentencia->bindParam(':id', $txtID); //el id al que queremos acceder
             $sentencia->execute();
+            header("location:productos.php");
         }
         break;
     case "Cancelar": //si se presiona cancelar
@@ -88,6 +90,7 @@ switch ($accion) {
         $sentencia = $conexion->prepare("DELETE FROM sitiotiendadeportiva.productos WHERE idproductos=:id");
         $sentencia->bindParam(':id', $txtID); //parametros a eliminar en la base de datos
         $sentencia->execute();
+        header("location:productos.php");
 
         break;
 }
