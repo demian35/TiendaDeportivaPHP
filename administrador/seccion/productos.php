@@ -21,7 +21,13 @@ switch ($accion) {
         //sentencia para insercion
         $sentencia = $conexion->prepare("INSERT INTO productos(idproductos,producto,imagen) VALUES(NULL,:nombre,:imagen);");
         $sentencia->bindParam(':nombre', $nombreProd); //parametros a insertar en la base de datos
-        $sentencia->bindParam(':imagen', $imagen);
+        $fecha=new DateTime();
+        $archivoimagen=($imagen!="")?$fecha->getTimestamp()."_".$_FILES['imagen']['name']:"Imagen.jpg";//leemos la imagen
+        $archivoTemp=$_FILES['imagen']['tmp_name'];    //archivo temporal subido con el form html
+        if($archivoTemp!=""){//si hay una imagen en el server la movemos a la carpeta img
+            move_uploaded_file($archivoTemp,"../../img/".$archivoimagen);
+        }
+        $sentencia->bindParam(':imagen', $archivoimagen);
         $sentencia->execute();
         break;
     case "Editar": //si se presiona editar
