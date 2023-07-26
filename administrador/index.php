@@ -1,7 +1,14 @@
 <?php
-
+session_start();//iniciamos la sesion
 if($_POST){
-    header('Location:inicio.php');
+    if(($_POST['usuario']=="admin") && ($_POST['contrasena']=="12345")){//si se ingresa el usuario admin y la contraseña 12345 ingresa al crud
+        $_SESSION['user']="admin";
+        $_SESSION['nombreUsuario']="Admin";
+        header('Location:inicio.php');
+    }else{
+        $mensaje= "Usuario o contranseña son incorrectos";
+    }
+    
 }
 ?>
 
@@ -44,7 +51,7 @@ if($_POST){
                         <div class = "form-group">
                         <label>Usuario</label>
                         <input  type="text" class="form-control" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese su usuario">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <small  class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
 
                         <div class="form-group">
@@ -57,6 +64,14 @@ if($_POST){
                         
                         
 
+                    </div>
+                    <div class="card-footer">
+                        <?php if(isset($mensaje)){ ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $mensaje; ?>
+
+                        </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
