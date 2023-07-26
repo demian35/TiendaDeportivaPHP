@@ -3,41 +3,48 @@
 include("../template/header.php");
 ?>
 
-<?php 
+<?php
 //Recepcion y validacion con ifs ternarios de los datos que se reciban del form
 
-$txtID=(isset($_POST['txtID']))?$_POST['txtID']:"";//recibimos el ID del form si se recibe un id entonces txtID=$_POST['txtID'] caso contrario nada
-$nombreProd=(isset($_POST['nombreProd']))?$_POST['nombreProd']:"";//recibimos nombre si hay un nombre nombreProd=$_POST['nombreProd']
-$imagen=(isset($_FILES['imagen']['name']))?$_FILES['imagen']['name']:"";//lo mismo con una imagen
-$accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que se esta realizando agregar, editar o cancelar
+$txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : ""; //recibimos el ID del form si se recibe un id entonces txtID=$_POST['txtID'] caso contrario nada
+$nombreProd = (isset($_POST['nombreProd'])) ? $_POST['nombreProd'] : ""; //recibimos nombre si hay un nombre nombreProd=$_POST['nombreProd']
+$imagen = (isset($_FILES['imagen']['name'])) ? $_FILES['imagen']['name'] : ""; //lo mismo con una imagen
+$accion = (isset($_POST['accion'])) ? $_POST['accion'] : ""; //validamos la accion que se esta realizando agregar, editar o cancelar
 
 
 
- include("../config/conexionBD.php"); //importamos la clase conexionBD.php
- 
- //validacion de la accion que se presenta
- switch($accion){
-    case "Agregar"://si se presiona agregar
+include("../config/conexionBD.php"); //importamos la clase conexionBD.php
+
+//validacion de la accion que se presenta
+switch ($accion) {
+    case "Agregar": //si se presiona agregar
         //sentencia para insercion
-        $sentencia=$conexion->prepare("INSERT INTO productos(idproductos,producto,imagen) VALUES(NULL,:nombre,:imagen);");
-        $sentencia->bindParam(':nombre',$nombreProd);//parametros a insertar en la base de datos
-        $sentencia->bindParam(':imagen',$imagen);
+        $sentencia = $conexion->prepare("INSERT INTO productos(idproductos,producto,imagen) VALUES(NULL,:nombre,:imagen);");
+        $sentencia->bindParam(':nombre', $nombreProd); //parametros a insertar en la base de datos
+        $sentencia->bindParam(':imagen', $imagen);
         $sentencia->execute();
-        echo "Se presiono el boton de agregar";
         break;
-    case "Editar"://si se presiona editar
+    case "Editar": //si se presiona editar
         echo "Se presiono el boton editar";
         break;
-    case "Cancelar"://si se presiona cancelar
+    case "Cancelar": //si se presiona cancelar
         echo "Se presiono cancelar";
         break;
- }
+    case "Seleccionar": //si se presiona editar
+        echo "Se presiono el boton editar";
+        break;
+    case "Borrar": //si se presiona cancelar
+        $sentencia = $conexion->prepare("DELETE FROM sitiotiendadeportiva.productos WHERE idproductos=:id");
+        $sentencia->bindParam(':id', $txtID); //parametros a insertar en la base de datos
+        $sentencia->execute();
+        break;
+}
 
- //sentencia para mostrar los registros en la pantalla
+//sentencia para mostrar los registros en la pantalla
 
- $sentencia=$conexion->prepare("SELECT * FROM sitiotiendadeportiva.productos;");
- $sentencia->execute();//ejecutamos la sentencia
- $resultados=$sentencia->fetchAll(PDO::FETCH_ASSOC);//mostramos los registros en la pantalla
+$sentencia = $conexion->prepare("SELECT * FROM sitiotiendadeportiva.productos;");
+$sentencia->execute(); //ejecutamos la sentencia
+$resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC); //mostramos los registros en la pantalla
 
 
 ?>
@@ -52,7 +59,7 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
 
                 <div class="form-group">
                     <label for="txtID">ID:</label>
-                    <input type="text" class="form-control" name="txtID" id="txtID" placeholder="ID"> 
+                    <input type="text" class="form-control" name="txtID" id="txtID" placeholder="ID">
                 </div>
 
                 <br>
@@ -65,7 +72,7 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
                 <br>
                 <div class="form-group">
                     <label for="imagen">Imagen producto:</label>
-                    <input type="file" class="form-control" name="imagen" id="imagen" >
+                    <input type="file" class="form-control" name="imagen" id="imagen">
                 </div>
 
                 <br>
@@ -79,7 +86,7 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
         </div>
         <div class="card-footer">
             <?php include("../config/conexionBD.php");
-                echo (isset($conexion))?"conexion establecida":"";
+            echo (isset($conexion)) ? "conexion establecida" : "";
             ?>
         </div>
 
@@ -102,24 +109,24 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($resultados as $producto){ ?>
-                <tr class="">
-                    <td scope="row"> <?php echo $producto['idproductos']?></td>
-                    <td><?php echo $producto['producto']?></td>
-                    <td><?php echo $producto['imagen']?></td>
-                    <td>
-                        <form  method="post">
-                            <input type="hidden" name="txtID" id="txtID" value="<?php echo $producto['idproductos']?>">
-                            <input class="btn btn-info" type="submit" name="accion" value="Seleccionar">
-                            <input class="btn btn-danger" type="submit" name="accion" value="Borrar">
-                        </form>
-                    </td>
-                </tr>
-                <?php }?>
+                <?php foreach ($resultados as $producto) { ?>
+                    <tr class="">
+                        <td scope="row"> <?php echo $producto['idproductos'] ?></td>
+                        <td><?php echo $producto['producto'] ?></td>
+                        <td><?php echo $producto['imagen'] ?></td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="txtID" id="txtID" value="<?php echo $producto['idproductos'] ?>">
+                                <input class="btn btn-info" type="submit" name="accion" value="Seleccionar">
+                                <input class="btn btn-danger" type="submit" name="accion" value="Borrar">
+                            </form>
+                        </td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>
-    
+
 </div>
 
 
