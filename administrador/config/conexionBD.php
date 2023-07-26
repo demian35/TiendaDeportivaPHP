@@ -3,8 +3,8 @@
 
  $server="localhost";
  $baseDedatos="sitiotiendadeportiva";
- $user="root";
- $password="root";
+ $user="";
+ $password="";
 
  //creando la conexion con la base
  try{
