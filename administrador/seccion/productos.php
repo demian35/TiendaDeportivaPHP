@@ -25,7 +25,10 @@ switch ($accion) {
         $sentencia->execute();
         break;
     case "Editar": //si se presiona editar
-        echo "Se presiono el boton editar";
+        $sentencia = $conexion->prepare("UPDATE productos SET producto=:nombre WHERE idproductos=:id");//sentencia para editar
+        $sentencia->bindParam(':nombre', $nombreProd); //parametros a insertar en la base de datos
+        $sentencia->bindParam(':id', $txtID);//el id al que queremos acceder
+        $sentencia->execute();
         break;
     case "Cancelar": //si se presiona cancelar
         echo "Se presiono cancelar";
