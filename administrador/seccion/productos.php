@@ -107,7 +107,13 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
                     <td scope="row"> <?php echo $producto['idproductos']?></td>
                     <td><?php echo $producto['producto']?></td>
                     <td><?php echo $producto['imagen']?></td>
-                    <td>Seleccionar | Borrar</td>
+                    <td>
+                        <form  method="post">
+                            <input type="hidden" name="txtID" id="txtID" value="<?php echo $producto['idproductos']?>">
+                            <input class="btn btn-info" type="submit" name="accion" value="Seleccionar">
+                            <input class="btn btn-danger" type="submit" name="accion" value="Borrar">
+                        </form>
+                    </td>
                 </tr>
                 <?php }?>
             </tbody>
