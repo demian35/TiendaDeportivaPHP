@@ -33,6 +33,13 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
         break;
  }
 
+ //sentencia para mostrar los registros en la pantalla
+
+ $sentencia=$conexion->prepare("SELECT * FROM sitiotiendadeportiva.productos;");
+ $sentencia->execute();//ejecutamos la sentencia
+ $resultados=$sentencia->fetchAll(PDO::FETCH_ASSOC);//mostramos los registros en la pantalla
+
+
 ?>
 
 <div class="col-md-5">
@@ -70,6 +77,11 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
             </form>
 
         </div>
+        <div class="card-footer">
+            <?php include("../config/conexionBD.php");
+                echo (isset($conexion))?"conexion establecida":"";
+            ?>
+        </div>
 
 
     </div>
@@ -90,12 +102,14 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
                 </tr>
             </thead>
             <tbody>
+                <?php foreach($resultados as $producto){ ?>
                 <tr class="">
-                    <td scope="row">1</td>
-                    <td>Playera Pumas UNAM</td>
-                    <td>imagen.jpg</td>
+                    <td scope="row"> <?php echo $producto['idproductos']?></td>
+                    <td><?php echo $producto['producto']?></td>
+                    <td><?php echo $producto['imagen']?></td>
                     <td>Seleccionar | Borrar</td>
                 </tr>
+                <?php }?>
             </tbody>
         </table>
     </div>

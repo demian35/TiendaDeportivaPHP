@@ -10,7 +10,6 @@
  try{
     $conexion= new PDO("mysql:host=$server;dbname=$baseDedatos",$user,$password);
     $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    echo (isset($conexion))?"conexion establecida":"";
  }catch(PDOException $error){
         echo "Fallo al conectarse con la bd".$error->getMessage();
  }
