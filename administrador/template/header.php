@@ -1,3 +1,15 @@
+<?php 
+session_start();//iniciamos una sesion para que solo pueda entrar a esta pagina el admin
+if(!isset($_SESSION['user'])){//si no esta logueado el admin
+    header("location:../index.php");//lo redirecciionamos al login
+}else{
+    if($_SESSION['user']=="admin"){
+        $nombreUsuario=$_SESSION['nombreUsuario'];
+    }
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 

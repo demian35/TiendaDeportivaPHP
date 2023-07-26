@@ -51,7 +51,7 @@ if($_POST){
                         <label >Password</label>
                         <input  type="password" class="form-control" name="contrasena" placeholder="Password">
                         </div>
-
+                        <br>
                         <button type="submit" class="btn btn-primary">Iniciar sesion</button>
                         </form>
                         
