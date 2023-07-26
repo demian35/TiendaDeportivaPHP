@@ -18,9 +18,26 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
  echo $imagen."<br>";
  echo $accion."<br>";
 
+ //datos del servidor , usuario , base de datos y contraseña a la bd que nos conectaremos
+
+ $server="localhost";
+ $baseDedatos="sitiotiendadeportiva";
+ $user="root";
+ $password="root";
+
+ //creando la conexion con la base
+ try{
+    $conexion= new PDO("mysql:host=$server;dbname=$baseDedatos",$user,$password);
+    $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    echo (isset($conexion))?"conexion establecida":"";
+ }catch(PDOException $error){
+        echo "Fallo al conectarse con la bd".$error->getMessage();
+ }
+ 
  //validacion de la accion que se presenta
  switch($accion){
     case "Agregar"://si se presiona agregar
+        //insert into productos(idproductos,producto,imagen) values(Null,'playera','playera.jpg');
         echo "Se presiono el boton de agregar";
         break;
     case "Editar"://si se presiona editar
