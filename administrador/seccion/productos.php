@@ -137,9 +137,9 @@ $resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC); //mostramos los registros 
 
                 <br>
                 <div class="btn-group" role="group" aria-label="">
-                    <button type="submit" name="accion" value="Agregar" class="btn btn-success">Agregar</button>
-                    <button type="submit" name="accion" value="Editar" class="btn btn-warning">Editar</button>
-                    <button type="submit" name="accion" value="Cancelar" class="btn btn-info">Cancelar</button>
+                    <button type="submit" name="accion" <?php echo($accion=="Seleccionar")?"disabled":""; ?> value="Agregar" class="btn btn-success">Agregar</button>
+                    <button type="submit" name="accion"  <?php echo($accion!="Seleccionar")?"disabled":""; ?> value="Editar" class="btn btn-warning">Editar</button>
+                    <button type="submit" name="accion" <?php echo($accion!="Seleccionar")?"disabled":""; ?>   value="Cancelar" class="btn btn-info">Cancelar</button>
                 </div>
             </form>
 
