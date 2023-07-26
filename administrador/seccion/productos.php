@@ -37,7 +37,9 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que 
  //validacion de la accion que se presenta
  switch($accion){
     case "Agregar"://si se presiona agregar
-        //insert into productos(idproductos,producto,imagen) values(Null,'playera','playera.jpg');
+        
+        $sentencia=$conexion->prepare("INSERT INTO productos(idproductos,producto,imagen) VALUES(NULL,'playera2','playera2.jpg');");
+        $sentencia->execute();
         echo "Se presiono el boton de agregar";
         break;
     case "Editar"://si se presiona editar
