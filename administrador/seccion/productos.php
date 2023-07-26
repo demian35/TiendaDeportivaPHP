@@ -11,34 +11,17 @@ $nombreProd=(isset($_POST['nombreProd']))?$_POST['nombreProd']:"";//recibimos no
 $imagen=(isset($_FILES['imagen']['name']))?$_FILES['imagen']['name']:"";//lo mismo con una imagen
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";//validamos la accion que se esta realizando agregar, editar o cancelar
 
-//verificamos que si se esten recibiendo los datos:
 
- echo $txtID."<br>";
- echo $nombreProd."<br>";
- echo $imagen."<br>";
- echo $accion."<br>";
 
- //datos del servidor , usuario , base de datos y contraseña a la bd que nos conectaremos
-
- $server="localhost";
- $baseDedatos="sitiotiendadeportiva";
- $user="root";
- $password="root";
-
- //creando la conexion con la base
- try{
-    $conexion= new PDO("mysql:host=$server;dbname=$baseDedatos",$user,$password);
-    $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    echo (isset($conexion))?"conexion establecida":"";
- }catch(PDOException $error){
-        echo "Fallo al conectarse con la bd".$error->getMessage();
- }
+ include("../config/conexionBD.php"); //importamos la clase conexionBD.php
  
  //validacion de la accion que se presenta
  switch($accion){
     case "Agregar"://si se presiona agregar
-        
-        $sentencia=$conexion->prepare("INSERT INTO productos(idproductos,producto,imagen) VALUES(NULL,'playera2','playera2.jpg');");
+        //sentencia para insercion
+        $sentencia=$conexion->prepare("INSERT INTO productos(idproductos,producto,imagen) VALUES(NULL,:nombre,:imagen);");
+        $sentencia->bindParam(':nombre',$nombreProd);//parametros a insertar en la base de datos
+        $sentencia->bindParam(':imagen',$imagen);
         $sentencia->execute();
         echo "Se presiono el boton de agregar";
         break;
