@@ -125,6 +125,10 @@ $resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC); //mostramos los registros 
                 <div class="form-group">
                     <label for="imagen">Imagen producto:</label>
                     <?php echo $imagen ?>
+                    <?php if ($imagen != "") { ?>
+                        <img width="50" src="../../img/<?php echo $imagen ?>">
+
+                    <?php } ?>
                     <input type="file" class="form-control" name="imagen" id="imagen">
                 </div>
 
@@ -166,7 +170,7 @@ $resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC); //mostramos los registros 
                     <tr class="">
                         <td scope="row"> <?php echo $producto['idproductos'] ?></td>
                         <td><?php echo $producto['producto'] ?></td>
-                        <td><?php echo $producto['imagen'] ?></td>
+                        <td><img width="50" src="../../img/<?php echo $producto['imagen'] ?>"></td>
                         <td>
                             <form method="post">
                                 <input type="hidden" name="txtID" id="txtID" value="<?php echo $producto['idproductos'] ?>">
