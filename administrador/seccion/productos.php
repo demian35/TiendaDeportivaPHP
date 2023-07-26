@@ -114,14 +114,14 @@ $resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC); //mostramos los registros 
 
                 <div class="form-group">
                     <label for="txtID">ID:</label>
-                    <input type="text" class="form-control" name="txtID" value="<?php echo $txtID ?>" id="txtID" placeholder="ID">
+                    <input required readonly type="text" class="form-control" name="txtID" value="<?php echo $txtID ?>" id="txtID" placeholder="ID">
                 </div>
 
                 <br>
 
                 <div class="form-group">
                     <label for="nombreProd">Nombre del producto:</label>
-                    <input type="text" class="form-control" name="nombreProd" value="<?php echo $nombreProd ?>" id="nombreProd" placeholder="Producto">
+                    <input required type="text" class="form-control" name="nombreProd" value="<?php echo $nombreProd ?>" id="nombreProd" placeholder="Producto">
                 </div>
 
                 <br>
@@ -132,7 +132,7 @@ $resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC); //mostramos los registros 
                         <img class="img-thumbnail rounded" width="50" src="../../img/<?php echo $imagen ?>">
 
                     <?php } ?>
-                    <input type="file" class="form-control" name="imagen" id="imagen">
+                    <input required type="file" class="form-control" name="imagen" id="imagen">
                 </div>
 
                 <br>
