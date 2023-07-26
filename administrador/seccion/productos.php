@@ -30,12 +30,18 @@ switch ($accion) {
     case "Cancelar": //si se presiona cancelar
         echo "Se presiono cancelar";
         break;
-    case "Seleccionar": //si se presiona editar
-        echo "Se presiono el boton editar";
+    case "Seleccionar": //seleccionamos el registro al que le apachurremos el boton selecionar
+        $sentencia = $conexion->prepare("SELECT * FROM sitiotiendadeportiva.productos WHERE idproductos=:id;");
+        $sentencia->bindParam(':id', $txtID); //parametros a seleccionar en la base de datos
+        $sentencia->execute(); //ejecutamos la sentencia
+        $producto = $sentencia->fetch(PDO::FETCH_LAZY); //mostramos el registro seleccionado
+        //mostramos los datos del producto seleccionado
+        $nombreProd=$producto['producto'];
+        $imagen=$producto['imagen'];
         break;
     case "Borrar": //si se presiona cancelar
         $sentencia = $conexion->prepare("DELETE FROM sitiotiendadeportiva.productos WHERE idproductos=:id");
-        $sentencia->bindParam(':id', $txtID); //parametros a insertar en la base de datos
+        $sentencia->bindParam(':id', $txtID); //parametros a eliminar en la base de datos
         $sentencia->execute();
         break;
 }
