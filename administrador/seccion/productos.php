@@ -56,9 +56,20 @@ switch ($accion) {
         $imagen = $producto['imagen'];
         break;
     case "Borrar": //si se presiona cancelar
+        
+        $sentencia = $conexion->prepare("SELECT imagen FROM sitiotiendadeportiva.productos WHERE idproductos=:id;");
+        $sentencia->bindParam(':id', $txtID); //parametros a seleccionar en la base de datos
+        $sentencia->execute(); //ejecutamos la sentencia
+        $producto = $sentencia->fetch(PDO::FETCH_LAZY); //mostramos el registro seleccionado
+        if(isset($producto['imagen'])&&($producto['imagen']!="Imagen.jpg")){//si hay una imagen o un archivo llamado "Imagen.jpg"
+            if(file_exists("../../img/".$producto['imagen'])){//si esa imagen esta en la carpeta img
+                unlink("../../img/".$producto['imagen']);//la eliminamos
+            }   
+        }
         $sentencia = $conexion->prepare("DELETE FROM sitiotiendadeportiva.productos WHERE idproductos=:id");
         $sentencia->bindParam(':id', $txtID); //parametros a eliminar en la base de datos
         $sentencia->execute();
+
         break;
 }
 
