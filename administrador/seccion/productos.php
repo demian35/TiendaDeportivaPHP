@@ -21,11 +21,11 @@ switch ($accion) {
         //sentencia para insercion
         $sentencia = $conexion->prepare("INSERT INTO productos(idproductos,producto,imagen) VALUES(NULL,:nombre,:imagen);");
         $sentencia->bindParam(':nombre', $nombreProd); //parametros a insertar en la base de datos
-        $fecha=new DateTime();
-        $archivoimagen=($imagen!="")?$fecha->getTimestamp()."_".$_FILES['imagen']['name']:"Imagen.jpg";//leemos la imagen
-        $archivoTemp=$_FILES['imagen']['tmp_name'];    //archivo temporal subido con el form html
-        if($archivoTemp!=""){//si hay una imagen en el server la movemos a la carpeta img
-            move_uploaded_file($archivoTemp,"../../img/".$archivoimagen);
+        $fecha = new DateTime();
+        $archivoimagen = ($imagen != "") ? $fecha->getTimestamp() . "_" . $_FILES['imagen']['name'] : "Imagen.jpg"; //leemos la imagen
+        $archivoTemp = $_FILES['imagen']['tmp_name'];    //archivo temporal subido con el form html
+        if ($archivoTemp != "") { //si hay una imagen en el server la movemos a la carpeta img
+            move_uploaded_file($archivoTemp, "../../img/" . $archivoimagen);
         }
         $sentencia->bindParam(':imagen', $archivoimagen);
         $sentencia->execute();
@@ -37,8 +37,27 @@ switch ($accion) {
         $sentencia->execute();
 
         if ($imagen != "") { //si recibimos una imagen ejecutamos la sentencia de update
+
+            //subimos la nueva imagen
+            $fecha = new DateTime();
+            $archivoimagen = ($imagen != "") ? $fecha->getTimestamp() . "_" . $_FILES['imagen']['name'] : "Imagen.jpg"; //leemos la imagen
+            $archivoTemp = $_FILES['imagen']['tmp_name'];    //archivo temporal subido con el form html
+            move_uploaded_file($archivoTemp, "../../img/" . $archivoimagen);
+
+            //para sobreescribir la imagen al editarla hay que borrar la anterior
+            $sentencia = $conexion->prepare("SELECT imagen FROM sitiotiendadeportiva.productos WHERE idproductos=:id;");
+            $sentencia->bindParam(':id', $txtID); //parametros a seleccionar en la base de datos
+            $sentencia->execute(); //ejecutamos la sentencia
+            $producto = $sentencia->fetch(PDO::FETCH_LAZY); //mostramos el registro seleccionado
+            if (isset($producto['imagen']) && ($producto['imagen'] != "Imagen.jpg")) { //si hay una imagen o un archivo llamado "Imagen.jpg"
+                if (file_exists("../../img/" . $producto['imagen'])) { //si esa imagen esta en la carpeta img
+                    unlink("../../img/" . $producto['imagen']); //la eliminamos
+                }
+            }
+
+
             $sentencia = $conexion->prepare("UPDATE productos SET imagen=:imagen WHERE idproductos=:id"); //sentencia para editar
-            $sentencia->bindParam(':imagen', $imagen); //parametros a editar en la base de datos en este caso la imagen
+            $sentencia->bindParam(':imagen', $archivoimagen); //parametros a editar en la base de datos en este caso la imagen
             $sentencia->bindParam(':id', $txtID); //el id al que queremos acceder
             $sentencia->execute();
         }
@@ -56,15 +75,15 @@ switch ($accion) {
         $imagen = $producto['imagen'];
         break;
     case "Borrar": //si se presiona cancelar
-        
+
         $sentencia = $conexion->prepare("SELECT imagen FROM sitiotiendadeportiva.productos WHERE idproductos=:id;");
         $sentencia->bindParam(':id', $txtID); //parametros a seleccionar en la base de datos
         $sentencia->execute(); //ejecutamos la sentencia
         $producto = $sentencia->fetch(PDO::FETCH_LAZY); //mostramos el registro seleccionado
-        if(isset($producto['imagen'])&&($producto['imagen']!="Imagen.jpg")){//si hay una imagen o un archivo llamado "Imagen.jpg"
-            if(file_exists("../../img/".$producto['imagen'])){//si esa imagen esta en la carpeta img
-                unlink("../../img/".$producto['imagen']);//la eliminamos
-            }   
+        if (isset($producto['imagen']) && ($producto['imagen'] != "Imagen.jpg")) { //si hay una imagen o un archivo llamado "Imagen.jpg"
+            if (file_exists("../../img/" . $producto['imagen'])) { //si esa imagen esta en la carpeta img
+                unlink("../../img/" . $producto['imagen']); //la eliminamos
+            }
         }
         $sentencia = $conexion->prepare("DELETE FROM sitiotiendadeportiva.productos WHERE idproductos=:id");
         $sentencia->bindParam(':id', $txtID); //parametros a eliminar en la base de datos
