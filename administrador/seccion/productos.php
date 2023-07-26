@@ -25,10 +25,17 @@ switch ($accion) {
         $sentencia->execute();
         break;
     case "Editar": //si se presiona editar
-        $sentencia = $conexion->prepare("UPDATE productos SET producto=:nombre WHERE idproductos=:id");//sentencia para editar
-        $sentencia->bindParam(':nombre', $nombreProd); //parametros a insertar en la base de datos
-        $sentencia->bindParam(':id', $txtID);//el id al que queremos acceder
+        $sentencia = $conexion->prepare("UPDATE productos SET producto=:nombre WHERE idproductos=:id"); //sentencia para editar
+        $sentencia->bindParam(':nombre', $nombreProd); //parametros a editar en la base de datos en este caso nombre del producto
+        $sentencia->bindParam(':id', $txtID); //el id al que queremos acceder
         $sentencia->execute();
+
+        if ($imagen != "") { //si recibimos una imagen ejecutamos la sentencia de update
+            $sentencia = $conexion->prepare("UPDATE productos SET imagen=:imagen WHERE idproductos=:id"); //sentencia para editar
+            $sentencia->bindParam(':imagen', $imagen); //parametros a editar en la base de datos en este caso la imagen
+            $sentencia->bindParam(':id', $txtID); //el id al que queremos acceder
+            $sentencia->execute();
+        }
         break;
     case "Cancelar": //si se presiona cancelar
         echo "Se presiono cancelar";
@@ -39,8 +46,8 @@ switch ($accion) {
         $sentencia->execute(); //ejecutamos la sentencia
         $producto = $sentencia->fetch(PDO::FETCH_LAZY); //mostramos el registro seleccionado
         //mostramos los datos del producto seleccionado
-        $nombreProd=$producto['producto'];
-        $imagen=$producto['imagen'];
+        $nombreProd = $producto['producto'];
+        $imagen = $producto['imagen'];
         break;
     case "Borrar": //si se presiona cancelar
         $sentencia = $conexion->prepare("DELETE FROM sitiotiendadeportiva.productos WHERE idproductos=:id");
@@ -68,7 +75,7 @@ $resultados = $sentencia->fetchAll(PDO::FETCH_ASSOC); //mostramos los registros 
 
                 <div class="form-group">
                     <label for="txtID">ID:</label>
-                    <input type="text" class="form-control" name="txtID" value="<?php echo $txtID?>" id="txtID" placeholder="ID">
+                    <input type="text" class="form-control" name="txtID" value="<?php echo $txtID ?>" id="txtID" placeholder="ID">
                 </div>
 
                 <br>
